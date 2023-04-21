@@ -7,6 +7,9 @@ import supervision as sv
 import pandas as pd
 import pickle
 import os
+import umap
+from sklearn.manifold import TSNE
+import plotly.express as px
 
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_6_23-03-2023/NGB106117_1_8_SSD_seed_1.png'
 image = cv2.imread(img_temp)
@@ -97,9 +100,35 @@ for i in range(num):
     e.append(np.squeeze(predictor.get_image_embedding().cpu().numpy()))
     print("\r Process{}%".format(round((i+1)*100/num)), end="")
 
-with open("/home/zhi/data/PEAS/processed_data/image_embedding_vit_h", "wb") as fp:   
-    pickle.dump(e, fp)
+#with open("/home/zhi/data/PEAS/processed_data/image_embedding_vit_h", "wb") as fp:   
+ #   pickle.dump(e, fp)
 
 with open("/home/zhi/data/PEAS/processed_data/image_embedding_vit_h", "rb") as fp:
     e = pickle.load(fp)
 
+df_f_id = pd.read_csv('/home/zhi/data/PEAS/df_file_id.csv')
+
+e_expand = [e[i].ravel() for i in range(len(e))]
+e_array = np.array(e)
+mapper = umap.UMAP().fit(np.array(e_expand))
+umap.plot.points(mapper)
+
+embedding = mapper.transform(np.array(e_expand))
+
+fig, ax = plt.subplots(figsize=(12, 10))
+plt.scatter(
+    embedding[:, 0], embedding[:, 1], cmap="Spectral", s=0.1
+)
+plt.title("UMAP", fontsize=18)
+
+plt.show()
+
+tsne = TSNE(n_components=2, random_state=0)
+projections = tsne.fit_transform(np.array(e_expand))
+
+fig = px.scatter(
+    projections, x=0, y=1,
+    color=df_f_id.id
+    #labels={'color': 'species'}
+)
+fig.show()
