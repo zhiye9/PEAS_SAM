@@ -7,7 +7,6 @@ import supervision as sv
 import pandas as pd
 import pickle
 import os
-import umap
 from sklearn.manifold import TSNE
 import plotly.express as px
 
@@ -48,6 +47,8 @@ plt.imshow(annotated_image)
 plt.axis('off')
 plt.show()
 
+masks_ls = [masks[i]['area'] for i in range(len(masks))]
+plt.hist(masks_ls)
 --------------------------------------------------------------------------
 
 img_file = open("/home/zhi/data/PEAS/imgs.txt", "r")
@@ -132,3 +133,4 @@ fig = px.scatter(
     #labels={'color': 'species'}
 )
 fig.show()
+
