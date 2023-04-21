@@ -8,6 +8,8 @@ import pandas as pd
 import pickle
 import os
 from sklearn.manifold import TSNE
+import umap
+import umap.plot
 import plotly.express as px
 
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_6_23-03-2023/NGB106117_1_8_SSD_seed_1.png'
@@ -108,29 +110,55 @@ with open("/home/zhi/data/PEAS/processed_data/image_embedding_vit_h", "rb") as f
     e = pickle.load(fp)
 
 df_f_id = pd.read_csv('/home/zhi/data/PEAS/df_file_id.csv')
+df_wrinkle = pd.read_excel('/home/zhi/nas/PEAS/Nordgen_wrinkledpeas2023.xlsx', usecols = 'A, B')
 
 e_expand = [e[i].ravel() for i in range(len(e))]
+
+idd = []
+e_idx = []
+wrinkle = []
+
+for j in range(df_wrinkle.shape[0]):
+    index = df_f_id.index[df_f_id['id'] == df_wrinkle['Accession number'][j]]
+    if len(index) != 0:
+        idd.append(df_f_id['id'].loc[index[0]])
+        e_idx.append(e_expand[index[0]])
+        wrinkle.append(df_wrinkle['Seed wrinkling'].loc[j])
+        print("\r Process{}%".format(round((j+1)*100/df_wrinkle.shape[0])), end="")
+
+d_e_wrinkle = {'id':idd, 'wrinkling': wrinkle, 'embeddings':np.vstack(e_idx)}
+df_e_wrinkle = pd.DataFrame(data = d_e_wrinkle)
+df_f_id.index[df_f_id['id'] == df_wrinkle['Accession number'][1]]
+
 e_array = np.array(e)
-mapper = umap.UMAP().fit(np.array(e_expand))
+mapper = umap.UMAP().fit(np.array(d_e_wrinkle['embeddings']))
 umap.plot.points(mapper)
 
-embedding = mapper.transform(np.array(e_expand))
+embedding = umap.UMAP().fit_transform(np.array(d_e_wrinkle['embeddings']))
+umap.plot.points(embedding, labels = d_e_wrinkle['wrinkling'])
+
+embedding_wrinkle = np.column_stack([embedding, np.array(wrinkle)])
 
 fig, ax = plt.subplots(figsize=(12, 10))
 plt.scatter(
-    embedding[:, 0], embedding[:, 1], cmap="Spectral", s=0.1
+    embedding_wrinkle[:, 0], embedding_wrinkle[:, 1], cmap="Spectral", c = embedding_wrinkle[:, 2]
 )
 plt.title("UMAP", fontsize=18)
 
 plt.show()
 
 tsne = TSNE(n_components=2, random_state=0)
-projections = tsne.fit_transform(np.array(e_expand))
+projections = tsne.fit_transform(np.array(d_e_wrinkle['embeddings']))
 
 fig = px.scatter(
     projections, x=0, y=1,
-    color=df_f_id.id
+    color=wrinkle
     #labels={'color': 'species'}
 )
 fig.show()
 
+fig, ax = plt.subplots(figsize=(12, 10))
+plt.scatter(
+    embedding[:, 0], embedding[:, 1], cmap="Spectral", s=0.1
+)
+plt.title("TSNE", fontsize=18)
