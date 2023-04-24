@@ -127,7 +127,7 @@ for j in range(df_wrinkle.shape[0]):
         print("\r Process{}%".format(round((j+1)*100/df_wrinkle.shape[0])), end="")
 
 d_e_wrinkle = {'id':idd, 'wrinkling': wrinkle, 'embeddings':np.vstack(e_idx)}
-df_e_wrinkle = pd.DataFrame(data = d_e_wrinkle)
+#df_e_wrinkle = pd.DataFrame(data = d_e_wrinkle)
 df_f_id.index[df_f_id['id'] == df_wrinkle['Accession number'][1]]
 
 e_array = np.array(e)
@@ -139,16 +139,28 @@ umap.plot.points(embedding, labels = d_e_wrinkle['wrinkling'])
 
 embedding_wrinkle = np.column_stack([embedding, np.array(wrinkle)])
 
-fig, ax = plt.subplots(figsize=(12, 10))
-plt.scatter(
-    embedding_wrinkle[:, 0], embedding_wrinkle[:, 1], cmap="Spectral", c = embedding_wrinkle[:, 2]
+fig, ax = plt.subplots(figsize=(6, 5))
+scatter = plt.scatter(
+    embedding_wrinkle[:, 0], embedding_wrinkle[:, 1], cmap="Spectral", c = embedding_wrinkle[:, 2], 
 )
-plt.title("UMAP", fontsize=18)
-
+classes = ['Wrinkle absent', 'Wrinkle present']
+plt.title("UMAP", fontsize=12)
+plt.legend(handles=scatter.legend_elements()[0], loc ='upper right', labels = classes, fontsize = 9)
 plt.show()
 
 tsne = TSNE(n_components=2, random_state=0)
 projections = tsne.fit_transform(np.array(d_e_wrinkle['embeddings']))
+projections_wrinkle = np.column_stack([projections, np.array(wrinkle)])
+
+fig, ax = plt.subplots(figsize=(6, 5))
+scatter = plt.scatter(
+    projections_wrinkle[:, 0], projections_wrinkle[:, 1], cmap="Spectral", c = projections_wrinkle[:, 2], 
+)
+classes = ['Wrinkle absent', 'Wrinkle present']
+plt.title("t-SNE", fontsize=12)
+plt.legend(handles=scatter.legend_elements()[0], loc ='upper right', labels = classes, fontsize = 9)
+plt.show()
+
 
 fig = px.scatter(
     projections, x=0, y=1,
