@@ -28,3 +28,5 @@ for i in range(num):
 
 with open("/home/zhi/data/PEAS/processed_data/image_embedding_vit_h", "wb") as fp:   
     pickle.dump(e, fp)
+with open("/home/zhi/data/PEAS/processed_data/image_embedding_vit_h", "rb") as fp:
+    e = pickle.load(fp)
