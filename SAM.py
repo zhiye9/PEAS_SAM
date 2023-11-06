@@ -141,8 +141,8 @@ plt.show()
 mask_idx = [mask_sorted[n] for n in idx]
 
 mask_annotator = sv.MaskAnnotator()
-#detections = sv.Detections.from_sam(masks)
-detections = sv.Detections.from_sam(mask_idx)
+detections = sv.Detections.from_sam(masks)
+#detections = sv.Detections.from_sam(mask_idx)
 annotated_image = mask_annotator.annotate(image, detections, 0.75)
 
 plt.figure(figsize=(20,20))
