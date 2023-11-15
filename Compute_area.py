@@ -13,6 +13,7 @@ import time
 from scipy import ndimage
 from skimage.measure import label, regionprops
 import math
+import json
 
 with open("/home/zhi/data/PEAS/processed_data/img_id", "rb") as fp:
     img_id = pickle.load(fp)

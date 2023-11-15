@@ -13,12 +13,14 @@ import plotly.express as px
 from scipy import ndimage
 from skimage.measure import label, regionprops
 from matplotlib.patches import Rectangle
-
+import seaborn as sns
+import json
 
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_6_23-03-2023/NGB106117_1_8_SSD_seed_1.png'
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_4_23-03-2023/NGB101283_1_2_SD_seed_1.png'
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_4_23-03-2023/NGB101288_1_2_SD_seed_1.png'
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_4_23-03-2023/NGB101475_1_2_SD_seed_1.png'
+img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_6_23-03-2023/NGB21722_1_2_SD_seed_1.png'
 
 imagebgr = cv2.imread(img_temp)
 image = cv2.cvtColor(imagebgr, cv2.COLOR_BGR2RGB)
@@ -140,6 +142,7 @@ plt.show()
 ---------------------------------------------------------------------------------------------
 mask_idx = [mask_sorted[n] for n in idx]
 
+mask_idx = mask_sorted
 mask_annotator = sv.MaskAnnotator()
 detections = sv.Detections.from_sam(masks)
 #detections = sv.Detections.from_sam(mask_idx)
@@ -623,3 +626,150 @@ ax.bar_label(rects2, padding=3)
 fig.tight_layout()
 
 plt.show()   
+
+dict_feature['OneDrive_5_23-03-2023/NGB103494_1_2_SD_seed_1.png'].keys()
+
+type(dict_feature)
+
+
+------------------------------------------------------------------------------------------------
+with open("/home/zhi/data/PEAS/processed_data/dict_feature", "rb") as fp:
+    dict_feature = pickle.load(fp)
+
+sns.boxplot(dict_feature['OneDrive_4_23-03-2023/NGB102737_1_12_SSD_seed_1.png']['areas'])
+dd = dict_feature['OneDrive_4_23-03-2023/NGB102737_1_12_SSD_seed_1.png']['areas']
+q1 = pd.DataFrame(dict_feature['OneDrive_4_23-03-2023/NGB102737_1_12_SSD_seed_1.png']['areas'])
+
+def remove_outlier(ls):
+    Q1 = np.quantile(ls, 0.25)
+    Q3 = np.quantile(ls, 0.75)
+    IQR = Q3 - Q1
+    dn = Q1 - 1.5*IQR
+    up = Q3 + 1.5*IQR
+
+    return np.where((ls > dn) & (ls < up))[0]
+
+ind = 'OneDrive_4_23-03-2023/NGB102737_1_12_SSD_seed_1.png'
+
+dict_features_nonoutlier = {}
+
+for ind in dict_feature.keys():
+    if len(dict_feature[ind]['areas']) > 0:
+        mask_idx = dict_feature[ind]['msk_idx']
+        mask_areas = dict_feature[ind]['areas']
+        mask_eccentricity = dict_feature[ind]['eccentricity']
+        mask_rgb_value = dict_feature[ind]['rgb_value']
+        mask_solidity = dict_feature[ind]['solidity']
+        mask_perimeter = dict_feature[ind]['perimeter']
+        mask_major_length = dict_feature[ind]['major_length']
+        mask_minor_length = dict_feature[ind]['minor_length']
+        mask_roundness = dict_feature[ind]['roundness']
+
+        non_outlier = remove_outlier(mask_areas)
+        mask_idx_nonoutlier = [mask_idx[i] for i in non_outlier]
+        mask_areas_nonoutlier = [mask_areas[i] for i in non_outlier]
+        mask_eccentricity_nonoutlier = [mask_eccentricity[i] for i in non_outlier]
+        mask_rgb_value_nonoutlier = [mask_rgb_value[i] for i in non_outlier]
+        mask_solidity_nonoutlier = [mask_solidity[i] for i in non_outlier]
+        mask_perimeter_nonoutlier = [mask_perimeter[i] for i in non_outlier]
+        mask_major_length_nonoutlier = [mask_major_length[i] for i in non_outlier]
+        mask_minor_length_nonoutlier = [mask_minor_length[i] for i in non_outlier]
+        mask_roundness_nonoutlier = [mask_roundness[i] for i in non_outlier]
+
+        dict_mask_features_nonoutlier = {'id1': dict_feature[ind]['id1'], 'id2': dict_feature[ind]['id2'], 'msk_idx': mask_idx_nonoutlier, 'areas': mask_areas_nonoutlier, 'eccentricity': mask_eccentricity_nonoutlier, 'rgb_value': mask_rgb_value_nonoutlier,'solidity': mask_solidity_nonoutlier, 'perimeter': mask_perimeter_nonoutlier, 'major_length': mask_major_length_nonoutlier, 'minor_length': mask_minor_length_nonoutlier, 'roundness': mask_roundness_nonoutlier}
+        dict_features_nonoutlier[ind] = dict_mask_features_nonoutlier
+
+#with open("/home/zhi/data/PEAS/processed_data/dict_features_nonoutlier", "wb") as fp:   
+#    pickle.dump(dict_features_nonoutlier, fp)
+
+with open("/home/zhi/data/PEAS/processed_data/dict_features_nonoutlier", "rb") as fp:
+    dict_features_nonoutlier = pickle.load(fp)
+
+l1 = 0
+for ind in dict_feature.keys():
+    l1 += len(dict_feature[ind]['msk_idx'])
+l2 = 0
+for ind in dict_features_nonoutlier.keys():
+    l2 += len(dict_features_nonoutlier[ind]['msk_idx'])
+
+#5190 masks were removed as outlier
+----------------------------------------------------------------------------------------------------------------------------------
+#Mean and std of RGB
+def RGB_mean(rgb_value):
+    R_median = np.median(rgb_value[:, 0])
+    G_median=  np.median(rgb_value[:, 1])
+    B_median = np.median(rgb_value[:, 2])
+
+    R_sd = np.std(rgb_value[:, 0])
+    G_sd=  np.std(rgb_value[:, 1])
+    B_sd = np.std(rgb_value[:, 2])
+
+    return R_median, G_median, B_median, R_sd, G_sd, B_sd
+
+for ind in dict_features_nonoutlier.keys():
+    mask_rgb_value = dict_features_nonoutlier[ind]['rgb_value']
+    R_median_ls = []
+    G_median_ls = []
+    B_median_ls = []
+    R_sd_ls = []
+    G_sd_ls = []
+    B_sd_ls = []
+    for i in range(len(mask_rgb_value)):
+        R_median, G_median, B_median, R_sd, G_sd, B_sd = RGB_mean(mask_rgb_value[i])
+        R_median_ls.append(R_median)
+        G_median_ls.append(G_median)
+        B_median_ls.append(B_median)
+        R_sd_ls.append(R_sd)
+        G_sd_ls.append(G_sd)
+        B_sd_ls.append(B_sd)
+    dict_features_nonoutlier[ind]['R_median'] = R_median_ls
+    dict_features_nonoutlier[ind]['G_median'] = G_median_ls
+    dict_features_nonoutlier[ind]['B_median'] = B_median_ls
+    dict_features_nonoutlier[ind]['R_sd'] = R_sd_ls
+    dict_features_nonoutlier[ind]['G_sd'] = G_sd_ls
+    dict_features_nonoutlier[ind]['B_sd'] = B_sd_ls
+    del dict_features_nonoutlier[ind]['rgb_value']
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+dict_mask_features = {'file': [], 'id1': [], 'id2': [], 'number of masks': [], 'areas median': [], 'areas sd': [], 'eccentricity median': [], 'eccentricity sd': [], 'solidity median': [], 'solidity sd': [], 'perimeter median': [], 'perimeter sd': [], 'major_length median': [], 'major_length sd': [], 'minor_length median': [], 'minor_length sd': [], 'roundness median': [], 'roundness sd': [], 'R_median median': [], 'R_median sd': [], 'G_median median': [], 'G_median sd': [], 'B_median median': [], 'B_median sd': [], 'R_sd median': [], 'R_sd sd': [],  'G_sd median': [], 'G_sd sd': [], 'B_sd median': [], 'B_sd sd': []}      
+for ind in dict_features_nonoutlier.keys():
+    dict_mask_features['file'].append(ind)
+    dict_mask_features['id1'].append(dict_features_nonoutlier[ind]['id1'])
+    dict_mask_features['id2'].append(dict_features_nonoutlier[ind]['id2'])
+    dict_mask_features['number of masks'].append(len(dict_features_nonoutlier[ind]['msk_idx']))
+    dict_mask_features['areas median'].append(np.median(dict_features_nonoutlier[ind]['areas']))
+    dict_mask_features['areas sd'].append(np.std(dict_features_nonoutlier[ind]['areas']))
+    dict_mask_features['eccentricity median'].append(np.median(dict_features_nonoutlier[ind]['eccentricity']))
+    dict_mask_features['eccentricity sd'].append(np.std(dict_features_nonoutlier[ind]['eccentricity']))
+    dict_mask_features['solidity median'].append(np.median(dict_features_nonoutlier[ind]['solidity']))
+    dict_mask_features['solidity sd'].append(np.std(dict_features_nonoutlier[ind]['solidity']))
+    dict_mask_features['perimeter median'].append(np.median(dict_features_nonoutlier[ind]['perimeter']))
+    dict_mask_features['perimeter sd'].append(np.std(dict_features_nonoutlier[ind]['perimeter']))
+    dict_mask_features['major_length median'].append(np.median(dict_features_nonoutlier[ind]['major_length']))
+    dict_mask_features['major_length sd'].append(np.std(dict_features_nonoutlier[ind]['major_length']))
+    dict_mask_features['minor_length median'].append(np.median(dict_features_nonoutlier[ind]['minor_length']))
+    dict_mask_features['minor_length sd'].append(np.std(dict_features_nonoutlier[ind]['minor_length']))
+    dict_mask_features['roundness median'].append(np.median(dict_features_nonoutlier[ind]['roundness']))
+    dict_mask_features['roundness sd'].append(np.std(dict_features_nonoutlier[ind]['roundness']))
+    dict_mask_features['R_median median'].append(np.median(dict_features_nonoutlier[ind]['R_median']))
+    dict_mask_features['R_median sd'].append(np.std(dict_features_nonoutlier[ind]['R_median']))
+    dict_mask_features['G_median median'].append(np.median(dict_features_nonoutlier[ind]['G_median']))
+    dict_mask_features['G_median sd'].append(np.std(dict_features_nonoutlier[ind]['G_median']))
+    dict_mask_features['B_median median'].append(np.median(dict_features_nonoutlier[ind]['B_median']))
+    dict_mask_features['B_median sd'].append(np.std(dict_features_nonoutlier[ind]['B_median']))
+    dict_mask_features['R_sd median'].append(np.median(dict_features_nonoutlier[ind]['R_median']))
+    dict_mask_features['R_sd sd'].append(np.std(dict_features_nonoutlier[ind]['R_median']))
+    dict_mask_features['G_sd median'].append(np.median(dict_features_nonoutlier[ind]['G_median']))
+    dict_mask_features['G_sd sd'].append(np.std(dict_features_nonoutlier[ind]['G_median']))
+    dict_mask_features['B_sd median'].append(np.median(dict_features_nonoutlier[ind]['B_median']))
+    dict_mask_features['B_sd sd'].append(np.std(dict_features_nonoutlier[ind]['B_median']))
+
+df_mask_features = pd.DataFrame(dict_mask_features)
+#df_mask_features.to_csv('/home/zhi/data/PEAS/processed_data/df_mask_features.csv', index = False)
+
+for n in dict_mask_features.keys():
+    print(n, len(dict_mask_features[n]))
+
+
+
