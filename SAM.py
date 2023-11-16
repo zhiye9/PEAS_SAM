@@ -148,6 +148,7 @@ plt.show()
 mask_idx = [mask_sorted[n] for n in idx]
 
 mask_idx = mask_sorted
+
 mask_annotator = sv.MaskAnnotator()
 #detections = sv.Detections.from_sam(masks)
 detections = sv.Detections.from_sam(mask_idx)
@@ -774,7 +775,9 @@ for ind in dict_features_nonoutlier.keys():
 df_mask_features = pd.DataFrame(dict_mask_features)
 wrong_file = df_mask_features[df_mask_features.isnull().any(axis=1)]['file'].values[0]
 df_mask_features = df_mask_features[df_mask_features['file'] != wrong_file]
+
 #df_mask_features.to_csv('/home/zhi/data/PEAS/processed_data/df_mask_features.csv', index = False)
+df_mask_features = pd.read_csv('/home/zhi/data/PEAS/processed_data/df_mask_features.csv')
 
 for n in dict_mask_features.keys():
     print(n, len(dict_mask_features[n]))
@@ -789,6 +792,9 @@ plt.hist(pca_pipeline['pca'].explained_variance_ratio_, bins = 27)
 plt.scatter(feature_pca[:, 0], feature_pca[:, 1], edgecolor='none', alpha=0.5,)
 plt.xlabel('component 1')
 plt.ylabel('component 2')
+plt.ylim(-10, 15)
+plt.xlabel("PC1")
+plt.ylabel("PC2")
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -822,11 +828,22 @@ def plotCumSumVariance(var=None):
     #You can use plot_color[] to obtain different colors for your plots
     cumvar = var.cumsum()
 
-    plt.figure()
-    plt.bar(np.arange(len(var)), cumvar, width = 1.0)
-    plt.axhline(y=0.9, color='r', linestyle='-')
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.bar(np.arange(1, len(var) + 1), cumvar, width = 0.5)
+    ax.axhline(y=0.9, color='r', linestyle='-')
+    ax.set_xticks(np.arange(1, len(var) + 1))
+    ax.set_title('Variance explained by PCs')
+    ax.set_xlabel('Principal Components')
+    ax.set_ylabel('Cumulative Explained Variance')
 
 plotCumSumVariance(pca_pipeline['pca'].explained_variance_ratio_)
+
+plt.scatter(feature_pca[:, 0], feature_pca[:, 1],  cmap='viridis', alpha=0.2)
+#plt.colorbar()
+plt.xlim(-7.5, 10)
+plt.ylim(-7.5, 10)
+plt.show()
 
 loadings = pca_pipeline['pca'].components_.T * np.sqrt(pca_pipeline['pca'].explained_variance_)
 loading_matrix = pd.DataFrame(loadings, index = df_masks.columns[3:])
@@ -865,3 +882,22 @@ plt.scatter(df_pca['pc1'], df_pca['pc2'], c=tags_numeric, cmap='viridis', alpha=
 plt.xlim(-7.5, 10)
 plt.ylim(-7.5, 10)
 plt.show()
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.axis(xmin=-7.5,xmax=10)
+ax.axis(ymin=-7.5,ymax=10)
+ax.scatter(feature_pca[:, 0], feature_pca[:, 1], feature_pca[:, 2], c=tags_numeric, cmap='viridis', alpha=0.2)
+
+-----------------------------------------------------------------------------------------------
+def draw_histograms(df, variables, n_rows, n_cols, size1, size2):
+    fig=plt.figure(figsize=(size1, size2))
+    for i, var_name in enumerate(variables):
+        ax=fig.add_subplot(n_rows,n_cols,i+1)
+        df[var_name].hist(bins = 20, ax=ax)
+        ax.set_title(var_name)
+    fig.tight_layout()  # Improves appearance a bit.
+    plt.show()
+
+draw_histograms(df_masks, df_masks.columns[3:], 3, 5, 10, 5)
+draw_histograms(df_mask_features, df_mask_features.columns[3:], 4, 7, 15, 6)
