@@ -10,6 +10,10 @@ import os
 import re
 from sklearn.manifold import TSNE
 import plotly.express as px
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+from matplotlib.pyplot import figure
 from scipy import ndimage
 from skimage.measure import label, regionprops
 from matplotlib.patches import Rectangle
@@ -21,6 +25,7 @@ img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_4_23-03-2023/NGB101283_1_2_
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_4_23-03-2023/NGB101288_1_2_SD_seed_1.png'
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_4_23-03-2023/NGB101475_1_2_SD_seed_1.png'
 img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_6_23-03-2023/NGB21722_1_2_SD_seed_1.png'
+img_temp =  '/home/zhi/nas/PEAS/PEAS_images/OneDrive_6_23-03-2023/NGB17883_1_2_SD_seed_1.png'
 
 imagebgr = cv2.imread(img_temp)
 image = cv2.cvtColor(imagebgr, cv2.COLOR_BGR2RGB)
@@ -144,8 +149,8 @@ mask_idx = [mask_sorted[n] for n in idx]
 
 mask_idx = mask_sorted
 mask_annotator = sv.MaskAnnotator()
-detections = sv.Detections.from_sam(masks)
-#detections = sv.Detections.from_sam(mask_idx)
+#detections = sv.Detections.from_sam(masks)
+detections = sv.Detections.from_sam(mask_idx)
 annotated_image = mask_annotator.annotate(image, detections, 0.75)
 
 plt.figure(figsize=(20,20))
@@ -299,7 +304,8 @@ for i in range(num):
 
 f_id1 = {'filename': f1, 'id_in_dictionary': id_d, 'id': id1, 'acc_num':id2}
 df_f_id1 = pd.DataFrame(data = f_id1)
-df_f_id1.to_csv('/home/zhi/data/PEAS/df_file_id1.csv', index = False)
+#df_f_id1.to_csv('/home/zhi/data/PEAS/df_file_id1.csv', index = False)
+df_f_id1 = pd.read_csv('/home/zhi/data/PEAS/df_file_id1.csv')
 -----------------------------------------------------------------------------------------------------
 
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -766,10 +772,96 @@ for ind in dict_features_nonoutlier.keys():
     dict_mask_features['B_sd sd'].append(np.std(dict_features_nonoutlier[ind]['B_median']))
 
 df_mask_features = pd.DataFrame(dict_mask_features)
+wrong_file = df_mask_features[df_mask_features.isnull().any(axis=1)]['file'].values[0]
+df_mask_features = df_mask_features[df_mask_features['file'] != wrong_file]
 #df_mask_features.to_csv('/home/zhi/data/PEAS/processed_data/df_mask_features.csv', index = False)
 
 for n in dict_mask_features.keys():
     print(n, len(dict_mask_features[n]))
 
+pca_pipeline = Pipeline([('scaling', StandardScaler()), ('pca', PCA(n_components=2))])
+pca_pipeline = Pipeline([('scaling', StandardScaler()), ('pca', PCA())])
+feature_pca = pca_pipeline.fit_transform(df_mask_features[df_mask_features.columns[3:]])
 
+print(pca_pipeline['pca'].explained_variance_ratio_)
+plt.hist(pca_pipeline['pca'].explained_variance_ratio_, bins = 27)
 
+plt.scatter(feature_pca[:, 0], feature_pca[:, 1], edgecolor='none', alpha=0.5,)
+plt.xlabel('component 1')
+plt.ylabel('component 2')
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(feature_pca[:, 0], feature_pca[:, 1], feature_pca[:, 2])
+
+-----------------------------------------------------------------------------------------------------------
+
+#temp['id_mask'] = temp['id2'].astype(str) + '_'+ temp['msk_idx'].astype(str)
+ind1 = 'OneDrive_4_23-03-2023/NGB101547_1_2_SD_seed_1.png'
+
+mask_features = []
+
+for ind1 in dict_features_nonoutlier.keys():
+    df_ind = pd.DataFrame(dict_features_nonoutlier[ind1])
+    mask_features.append(df_ind)
+    print("\r Process{}%".format(list(dict_features_nonoutlier.keys()).index(ind1)*100/len(dict_features_nonoutlier)), end="")
+
+df_masks = pd.concat(mask_features)
+df_masks.reset_index(drop = True, inplace = True)
+df_masks['msk_idx'] = df_masks['msk_idx'].astype(str)
+
+#df_masks.to_csv("/home/zhi/data/PEAS/processed_data/df_masks.csv", index = False)
+df_masks = pd.read_csv("/home/zhi/data/PEAS/processed_data/df_masks.csv")
+
+pca_pipeline = Pipeline([('scaling', StandardScaler()), ('pca', PCA(n_components=2))])
+pca_pipeline = Pipeline([('scaling', StandardScaler()), ('pca', PCA())])
+feature_pca = pca_pipeline.fit_transform(df_masks[df_masks.columns[3:]])
+
+def plotCumSumVariance(var=None):
+    #PLOT FIGURE
+    #You can use plot_color[] to obtain different colors for your plots
+    cumvar = var.cumsum()
+
+    plt.figure()
+    plt.bar(np.arange(len(var)), cumvar, width = 1.0)
+    plt.axhline(y=0.9, color='r', linestyle='-')
+
+plotCumSumVariance(pca_pipeline['pca'].explained_variance_ratio_)
+
+loadings = pca_pipeline['pca'].components_.T * np.sqrt(pca_pipeline['pca'].explained_variance_)
+loading_matrix = pd.DataFrame(loadings, index = df_masks.columns[3:])
+
+def myplot(score,coeff,name, size, labels=None):
+    xs = score[:,0]
+    ys = score[:,1]
+    n = coeff.shape[0]
+    scalex = 1.0/(xs.max() - xs.min())
+    scaley = 1.0/(ys.max() - ys.min())
+    figure(num=None, figsize=size, dpi=400, facecolor='w', edgecolor='k')
+    plt.scatter(xs * scalex,ys * scaley)
+    for i in range(n):
+        plt.arrow(0, 0, coeff[i,0], coeff[i,1],color = 'r', alpha = 0.5)
+        if labels is None:
+            plt.text(coeff[i,0]* 1.15, coeff[i,1] * 1.15, name[i], color = 'b', ha = 'center', va = 'center')
+        else:
+            plt.text(coeff[i,0]* 1.15, coeff[i,1] * 1.15, labels[i], color = 'g', ha = 'center', va = 'center')
+    plt.xlim(-1,1)
+    plt.ylim(-1,1)
+    plt.xlabel("PC{}".format(1))
+    plt.ylabel("PC{}".format(2))
+    plt.grid()
+
+myplot(feature_pca[:,0:2],loadings[:,0:2], name = df_masks.columns[3:], size = (12, 6))
+plt.show()
+
+df_pca = pd.DataFrame({'id': df_masks['id2'], 'pc1': feature_pca[:, 0], 'pc2': feature_pca[:, 1]}) 
+df_pca['id'] = df_pca['id'].astype(str)
+
+label_encoder = LabelEncoder()
+tags_numeric = label_encoder.fit_transform(df_pca['id'])
+
+plt.scatter(df_pca['pc1'], df_pca['pc2'], c=tags_numeric, cmap='viridis', alpha=0.2)
+#plt.colorbar()
+plt.xlim(-7.5, 10)
+plt.ylim(-7.5, 10)
+plt.show()
