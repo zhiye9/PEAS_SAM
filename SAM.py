@@ -17,6 +17,7 @@ from matplotlib.pyplot import figure
 from scipy import ndimage
 from skimage.measure import label, regionprops
 from matplotlib.patches import Rectangle
+import
 import seaborn as sns
 import json
 
@@ -901,3 +902,19 @@ def draw_histograms(df, variables, n_rows, n_cols, size1, size2):
 
 draw_histograms(df_masks, df_masks.columns[3:], 3, 5, 10, 5)
 draw_histograms(df_mask_features, df_mask_features.columns[3:], 4, 7, 15, 6)
+
+corr_matrix = df_masks[df_masks.columns[3:]].corr()
+upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+
+plt.figure(figsize=(10, 10), dpi = 1000)
+sns.heatmap(corr_matrix, cmap='coolwarm', annot=True, fmt=".4f", annot_kws={"size": 9})
+plt.title("Correlation heatmap of mask feature")
+plt.show()
+
+corr_matrix = df_mask_features[df_mask_features.columns[4:]].corr()
+upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+
+plt.figure(figsize=(20, 20), dpi = 1000)
+sns.heatmap(corr_matrix, cmap='coolwarm', annot=True, fmt=".4f", annot_kws={"size": 9})
+plt.title("Correlation heatmap of image feature", fontsize= 21)
+plt.show()
