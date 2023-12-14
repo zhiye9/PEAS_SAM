@@ -17,7 +17,6 @@ from matplotlib.pyplot import figure
 from scipy import ndimage
 from skimage.measure import label, regionprops
 from matplotlib.patches import Rectangle
-import
 import seaborn as sns
 import json
 
@@ -766,12 +765,12 @@ for ind in dict_features_nonoutlier.keys():
     dict_mask_features['G_median sd'].append(np.std(dict_features_nonoutlier[ind]['G_median']))
     dict_mask_features['B_median median'].append(np.median(dict_features_nonoutlier[ind]['B_median']))
     dict_mask_features['B_median sd'].append(np.std(dict_features_nonoutlier[ind]['B_median']))
-    dict_mask_features['R_sd median'].append(np.median(dict_features_nonoutlier[ind]['R_median']))
-    dict_mask_features['R_sd sd'].append(np.std(dict_features_nonoutlier[ind]['R_median']))
-    dict_mask_features['G_sd median'].append(np.median(dict_features_nonoutlier[ind]['G_median']))
-    dict_mask_features['G_sd sd'].append(np.std(dict_features_nonoutlier[ind]['G_median']))
-    dict_mask_features['B_sd median'].append(np.median(dict_features_nonoutlier[ind]['B_median']))
-    dict_mask_features['B_sd sd'].append(np.std(dict_features_nonoutlier[ind]['B_median']))
+    dict_mask_features['R_sd median'].append(np.median(dict_features_nonoutlier[ind]['R_sd']))
+    dict_mask_features['R_sd sd'].append(np.std(dict_features_nonoutlier[ind]['R_sd']))
+    dict_mask_features['G_sd median'].append(np.median(dict_features_nonoutlier[ind]['G_sd']))
+    dict_mask_features['G_sd sd'].append(np.std(dict_features_nonoutlier[ind]['G_sd']))
+    dict_mask_features['B_sd median'].append(np.median(dict_features_nonoutlier[ind]['B_sd']))
+    dict_mask_features['B_sd sd'].append(np.std(dict_features_nonoutlier[ind]['B_sd']))
 
 df_mask_features = pd.DataFrame(dict_mask_features)
 wrong_file = df_mask_features[df_mask_features.isnull().any(axis=1)]['file'].values[0]
@@ -793,13 +792,22 @@ plt.hist(pca_pipeline['pca'].explained_variance_ratio_, bins = 27)
 plt.scatter(feature_pca[:, 0], feature_pca[:, 1], edgecolor='none', alpha=0.5,)
 plt.xlabel('component 1')
 plt.ylabel('component 2')
-plt.ylim(-10, 15)
+#plt.xlim(-10, 15)
+#plt.ylim(-10, 15)
 plt.xlabel("PC1")
 plt.ylabel("PC2")
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(feature_pca[:, 0], feature_pca[:, 1], feature_pca[:, 2])
+ax.set_xlim(-10, 10)
+ax.set_ylim(-10, 12.5)
+ax.set_zlim(-7.5, 5)
+ax.set_xlabel('PC1')
+ax.set_ylabel('PC2')
+ax.set_zlabel('PC3')
+
+plt.show()
 
 -----------------------------------------------------------------------------------------------------------
 
@@ -883,12 +891,6 @@ plt.scatter(df_pca['pc1'], df_pca['pc2'], c=tags_numeric, cmap='viridis', alpha=
 plt.xlim(-7.5, 10)
 plt.ylim(-7.5, 10)
 plt.show()
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.axis(xmin=-7.5,xmax=10)
-ax.axis(ymin=-7.5,ymax=10)
-ax.scatter(feature_pca[:, 0], feature_pca[:, 1], feature_pca[:, 2], c=tags_numeric, cmap='viridis', alpha=0.2)
 
 -----------------------------------------------------------------------------------------------
 def draw_histograms(df, variables, n_rows, n_cols, size1, size2):
