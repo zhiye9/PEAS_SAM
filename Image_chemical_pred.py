@@ -97,9 +97,7 @@ results_df = pd.DataFrame(results_list)
 results_df.to_csv('model_evaluation_results.csv', index=False)
 
 # Find the max Mean_R2 of each Chemical
-max_r2 = results_df.groupby('Chemical')['Mean_R2'].max()
+max_r2 = results_df.loc[results_df.groupby('Chemical')['Mean_R2'].idxmax()][['Chemical', 'Model', 'Mean_R2']]
 max_r2.to_csv('max_r2.csv')
-
-# Find positive max Mean_R2
-max_r2_pos = max_r2[max_r2 > 0]
+max_r2_pos = max_r2[max_r2['Mean_R2'] > 0]
 max_r2_pos.to_csv('max_r2_pos.csv')

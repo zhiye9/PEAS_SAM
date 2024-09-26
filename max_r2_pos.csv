@@ -1,14 +1,14 @@
-Chemical,Mean_R2
-Albumin-2 (P08688),0.25427812967960384
-Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),0.10663850974661496
-Convicilin (Q9M3X6),0.08081057550482337
-Dehydrin DHN2 (P28640),0.3086171963110113
-"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",0.31255563297309685
-Legumin K (P05693),0.06583569943304608
-NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),0.21873402074870754
-Other components,0.08226449849489059
-Seed linoleate 9S-lipoxygenase-2 (P14856),0.2237962953708593
-Seed linoleate 9S-lipoxygenase-3 (P09918),0.22125671705489838
-Starch content,0.19694189777666019
-TKV,0.6009217629678828
-Vicilin (P13918),0.08816221797195992
+,Chemical,Model,Mean_R2
+119,Albumin-2 (P08688),randomforest,0.25427812967960384
+133,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),ridge,0.10663850974661496
+71,Convicilin (Q9M3X6),randomforest,0.08081057550482337
+155,Dehydrin DHN2 (P28640),randomforest,0.3086171963110113
+165,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.31255563297309685
+63,Legumin K (P05693),randomforest,0.06583569943304608
+145,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),ridge,0.21873402074870754
+19,Other components,randomforest,0.08226449849489059
+139,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.2237962953708593
+143,Seed linoleate 9S-lipoxygenase-3 (P09918),randomforest,0.22125671705489838
+5,Starch content,ridge,0.19694189777666019
+0,TKV,lasso,0.6009217629678828
+87,Vicilin (P13918),randomforest,0.08816221797195992
