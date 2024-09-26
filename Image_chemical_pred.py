@@ -96,7 +96,7 @@ for chemname in Chemical.columns:
 results_df = pd.DataFrame(results_list)
 results_df.to_csv('model_evaluation_results.csv', index=False)
 
-# Find the max Mean_R2 of each Chemical and keep the model name in the max_r2
+# Find the max Mean_R2 of each Chemical
 max_r2 = results_df.groupby('Chemical')['Mean_R2'].max()
 max_r2.to_csv('max_r2.csv')
 
