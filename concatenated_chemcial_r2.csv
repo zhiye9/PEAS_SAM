@@ -1,0 +1,233 @@
+index,Chemical,Model,Mean_R2
+119,Albumin-2 (P08688),randomforest,0.18135599209970638
+70,Convicilin (Q9M3X6),svr,0.03694785420082734
+154,Dehydrin DHN2 (P28640),svr,0.33378336376053575
+165,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.22117174030537362
+57,Legumin J (P05692),ridge,0.07300544831383167
+63,Legumin K (P05693),randomforest,0.061236570949504576
+163,Lipoxygenase domain-containing protein (A0A9D5ALU8),randomforest,0.013026291512184896
+144,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),lasso,0.27897989692168834
+16,Other components,lasso,0.2937532485931136
+168,PsHSC71.0 (Q41027),lasso,0.012499282008383827
+139,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.13312738877946226
+141,Seed linoleate 9S-lipoxygenase-3 (P09918),ridge,0.04213288301060657
+4,Starch content,lasso,0.20934234069587312
+0,TKV,lasso,0.6335477659044306
+87,Vicilin (P13918),randomforest,0.10043491897331233
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+119,Albumin-2 (P08688),randomforest,0.18135599209970638
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+70,Convicilin (Q9M3X6),svr,0.03694785420082734
+154,Dehydrin DHN2 (P28640),svr,0.33378336376053575
+341,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.4165565347598612
+243,Legumin B (P14594),randomforest,0.028153006943125537
+57,Legumin J (P05692),ridge,0.07300544831383167
+239,Legumin K (P05693),randomforest,0.07754708285949956
+336,Lipoxygenase domain-containing protein (A0A9D5ALU8),lasso,0.03590467688900885
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+16,Other components,lasso,0.2937532485931136
+268,Provicilin (P02855),lasso,0.03537945357458779
+344,PsHSC71.0 (Q41027),lasso,0.08006565193364683
+139,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.13312738877946226
+317,Seed linoleate 9S-lipoxygenase-3 (P09918),ridge,0.17017949153616221
+180,Starch content,lasso,0.27074174313620103
+0,TKV,lasso,0.6335477659044306
+87,Vicilin (P13918),randomforest,0.10043491897331233
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+119,Albumin-2 (P08688),randomforest,0.18135599209970638
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+70,Convicilin (Q9M3X6),svr,0.03694785420082734
+154,Dehydrin DHN2 (P28640),svr,0.33378336376053575
+341,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.4165565347598612
+243,Legumin B (P14594),randomforest,0.028153006943125537
+410,Legumin J (P05692),svr,0.07814005002589332
+415,Legumin K (P05693),randomforest,0.10234920627221697
+515,Lipoxygenase domain-containing protein (A0A9D5ALU8),randomforest,0.08915597565506779
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+16,Other components,lasso,0.2937532485931136
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+473,Seed biotin-containing protein SBP65 (Q41060),ridge,0.08551673557960511
+139,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.13312738877946226
+317,Seed linoleate 9S-lipoxygenase-3 (P09918),ridge,0.17017949153616221
+359,Starch content,randomforest,0.27754348738733803
+0,TKV,lasso,0.6335477659044306
+437,Vicilin (P13918),ridge,0.15113770418098474
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+70,Convicilin (Q9M3X6),svr,0.03694785420082734
+154,Dehydrin DHN2 (P28640),svr,0.33378336376053575
+341,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.4165565347598612
+243,Legumin B (P14594),randomforest,0.028153006943125537
+410,Legumin J (P05692),svr,0.07814005002589332
+588,Legumin K (P05693),lasso,0.12140764603630701
+691,Lipoxygenase domain-containing protein (A0A9D5ALU8),randomforest,0.1445220120615739
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+473,Seed biotin-containing protein SBP65 (Q41060),ridge,0.08551673557960511
+139,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.13312738877946226
+317,Seed linoleate 9S-lipoxygenase-3 (P09918),ridge,0.17017949153616221
+532,Starch content,lasso,0.28648019948325226
+0,TKV,lasso,0.6335477659044306
+437,Vicilin (P13918),ridge,0.15113770418098474
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+70,Convicilin (Q9M3X6),svr,0.03694785420082734
+857,Dehydrin DHN2 (P28640),ridge,0.3412429103880504
+341,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.4165565347598612
+753,Legumin A2 (P15838),ridge,0.011861717507357622
+770,Legumin B (P14594),svr,0.0336852920671148
+410,Legumin J (P05692),svr,0.07814005002589332
+588,Legumin K (P05693),lasso,0.12140764603630701
+867,Lipoxygenase domain-containing protein (A0A9D5ALU8),randomforest,0.1447286836085077
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+473,Seed biotin-containing protein SBP65 (Q41060),ridge,0.08551673557960511
+139,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.13312738877946226
+317,Seed linoleate 9S-lipoxygenase-3 (P09918),ridge,0.17017949153616221
+709,Starch content,ridge,0.35301486170494234
+0,TKV,lasso,0.6335477659044306
+788,Vicilin (P13918),lasso,0.1577016094578507
+782,Vicilin (Q702P1),svr,0.06812799898784647
+786,Vicilin 47k (Q43626),svr,0.05517541036555018
+795,"Vicilin, 14 kDa component (P02856)",randomforest,0.08178023308699509
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+948,Convicilin (Q9M3X6),lasso,0.07268167940109596
+1034,Dehydrin DHN2 (P28640),svr,0.3621040167294348
+341,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.4165565347598612
+753,Legumin A2 (P15838),ridge,0.011861717507357622
+770,Legumin B (P14594),svr,0.0336852920671148
+410,Legumin J (P05692),svr,0.07814005002589332
+943,Legumin K (P05693),randomforest,0.16502242092941477
+867,Lipoxygenase domain-containing protein (A0A9D5ALU8),randomforest,0.1447286836085077
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+1001,Seed biotin-containing protein SBP65 (Q41060),ridge,0.12212030200594662
+1019,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.3268169118712235
+317,Seed linoleate 9S-lipoxygenase-3 (P09918),ridge,0.17017949153616221
+925,Solubility,ridge,0.028793821009996966
+709,Starch content,ridge,0.35301486170494234
+0,TKV,lasso,0.6335477659044306
+965,Vicilin (P13918),ridge,0.2072679216959355
+782,Vicilin (Q702P1),svr,0.06812799898784647
+786,Vicilin 47k (Q43626),svr,0.05517541036555018
+795,"Vicilin, 14 kDa component (P02856)",randomforest,0.08178023308699509
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+948,Convicilin (Q9M3X6),lasso,0.07268167940109596
+1034,Dehydrin DHN2 (P28640),svr,0.3621040167294348
+341,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.4165565347598612
+1105,Legumin A2 (P15838),ridge,0.011956597786887452
+770,Legumin B (P14594),svr,0.0336852920671148
+1112,Legumin J (P05692),lasso,0.09504903816003148
+943,Legumin K (P05693),randomforest,0.16502242092941477
+867,Lipoxygenase domain-containing protein (A0A9D5ALU8),randomforest,0.1447286836085077
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+1001,Seed biotin-containing protein SBP65 (Q41060),ridge,0.12212030200594662
+1019,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.3268169118712235
+1199,Seed linoleate 9S-lipoxygenase-3 (P09918),randomforest,0.20063070113551457
+1101,Solubility,ridge,0.11235638461195545
+709,Starch content,ridge,0.35301486170494234
+0,TKV,lasso,0.6335477659044306
+965,Vicilin (P13918),ridge,0.2072679216959355
+782,Vicilin (Q702P1),svr,0.06812799898784647
+786,Vicilin 47k (Q43626),svr,0.05517541036555018
+795,"Vicilin, 14 kDa component (P02856)",randomforest,0.08178023308699509
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+1300,Convicilin (Q9M3X6),lasso,0.1300700996343397
+1034,Dehydrin DHN2 (P28640),svr,0.3621040167294348
+1397,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.44019445346394914
+1105,Legumin A2 (P15838),ridge,0.011956597786887452
+770,Legumin B (P14594),svr,0.0336852920671148
+1112,Legumin J (P05692),lasso,0.09504903816003148
+943,Legumin K (P05693),randomforest,0.16502242092941477
+1393,Lipoxygenase domain-containing protein (A0A9D5ALU8),ridge,0.14993756442674883
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+1001,Seed biotin-containing protein SBP65 (Q41060),ridge,0.12212030200594662
+1019,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.3268169118712235
+1199,Seed linoleate 9S-lipoxygenase-3 (P09918),randomforest,0.20063070113551457
+1101,Solubility,ridge,0.11235638461195545
+709,Starch content,ridge,0.35301486170494234
+0,TKV,lasso,0.6335477659044306
+1316,Vicilin (P13918),lasso,0.21704347841657468
+782,Vicilin (Q702P1),svr,0.06812799898784647
+786,Vicilin 47k (Q43626),svr,0.05517541036555018
+795,"Vicilin, 14 kDa component (P02856)",randomforest,0.08178023308699509
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+1300,Convicilin (Q9M3X6),lasso,0.1300700996343397
+1034,Dehydrin DHN2 (P28640),svr,0.3621040167294348
+1397,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.44019445346394914
+1105,Legumin A2 (P15838),ridge,0.011956597786887452
+770,Legumin B (P14594),svr,0.0336852920671148
+1112,Legumin J (P05692),lasso,0.09504903816003148
+943,Legumin K (P05693),randomforest,0.16502242092941477
+1569,Lipoxygenase domain-containing protein (A0A9D5ALU8),ridge,0.1662470800571006
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+1001,Seed biotin-containing protein SBP65 (Q41060),ridge,0.12212030200594662
+1019,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.3268169118712235
+1199,Seed linoleate 9S-lipoxygenase-3 (P09918),randomforest,0.20063070113551457
+1101,Solubility,ridge,0.11235638461195545
+709,Starch content,ridge,0.35301486170494234
+0,TKV,lasso,0.6335477659044306
+1316,Vicilin (P13918),lasso,0.21704347841657468
+782,Vicilin (Q702P1),svr,0.06812799898784647
+786,Vicilin 47k (Q43626),svr,0.05517541036555018
+795,"Vicilin, 14 kDa component (P02856)",randomforest,0.08178023308699509
+275,Albumin-1 D (P62929),randomforest,0.0125018094976936
+290,Albumin-1 F (P62931),svr,0.026804555173093596
+647,Albumin-2 (P08688),randomforest,0.21757359793283362
+311,Alcohol dehydrogenase-like C-terminal domain-containing protein (A0A9D4Y379),randomforest,0.1380970532659392
+1300,Convicilin (Q9M3X6),lasso,0.1300700996343397
+1034,Dehydrin DHN2 (P28640),svr,0.3621040167294348
+1397,"Glyceraldehyde-3-phosphate dehydrogenase, cytosolic (P34922)",ridge,0.44019445346394914
+1105,Legumin A2 (P15838),ridge,0.011956597786887452
+770,Legumin B (P14594),svr,0.0336852920671148
+1112,Legumin J (P05692),lasso,0.09504903816003148
+943,Legumin K (P05693),randomforest,0.16502242092941477
+1569,Lipoxygenase domain-containing protein (A0A9D5ALU8),ridge,0.1662470800571006
+323,NADPH-dependent aldehyde reductase 1 (A0A9D4XPH4),randomforest,0.29458644429357195
+544,Other components,lasso,0.3680760347556976
+268,Provicilin (P02855),lasso,0.03537945357458779
+520,PsHSC71.0 (Q41027),lasso,0.19620735086639332
+1001,Seed biotin-containing protein SBP65 (Q41060),ridge,0.12212030200594662
+1019,Seed linoleate 9S-lipoxygenase-2 (P14856),randomforest,0.3268169118712235
+1199,Seed linoleate 9S-lipoxygenase-3 (P09918),randomforest,0.20063070113551457
+1101,Solubility,ridge,0.11235638461195545
+709,Starch content,ridge,0.35301486170494234
+0,TKV,lasso,0.6335477659044306
+1316,Vicilin (P13918),lasso,0.21704347841657468
+782,Vicilin (Q702P1),svr,0.06812799898784647
+786,Vicilin 47k (Q43626),svr,0.05517541036555018
+795,"Vicilin, 14 kDa component (P02856)",randomforest,0.08178023308699509
