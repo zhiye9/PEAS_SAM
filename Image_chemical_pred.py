@@ -126,19 +126,23 @@ for i in range(10):
 
 results_df_all = pd.concat(results_df_ls, axis=0)
 results_df_all = results_df_all.reset_index(drop=True, inplace=False)
-results_df_all.to_csv('results_df_all.csv', index=False)
-# results_df_all = pd.read_csv('results_df_all.csv')
+# results_df_all.to_csv('results_df_all.csv', index=False)
+results_df_all = pd.read_csv('results_df_all.csv')
 
 max_r2 = pd.concat(max_r2_ls, axis=0)
 max_r2 = max_r2.reset_index(drop=True, inplace=False)
-max_r2.to_csv('max_r2_all.csv', index=False)
-# max_r2 = pd.read_csv('max_r2_all.csv')
+# max_r2.to_csv('max_r2_all.csv', index=False)
+max_r2 = pd.read_csv('max_r2_all.csv')
 
 concatenated_chemcial = pd.concat(max_r2_pos_ls, axis=0)
 concatenated_chemcial = concatenated_chemcial.reset_index(drop=False, inplace=False)
-concatenated_chemcial.to_csv('concatenated_chemcial_r2.csv', index=False)
-# concatenated_chemcial = pd.read_csv('concatenated_chemcial_r2.csv')
+# concatenated_chemcial.to_csv('concatenated_chemcial_r2.csv', index=False)
+concatenated_chemcial = pd.read_csv('concatenated_chemcial_r2.csv')
 
 summary_r2 = concatenated_chemcial.groupby('Chemical').agg(frequency=('Chemical', 'size'), mean_value=('Mean_R2', 'mean')).reset_index()
-summary_r2.to_csv('summary_r2.csv', index=False)
-# summary_r2 = pd.read_csv('summary_r2.csv')
+# summary_r2.to_csv('summary_r2.csv', index=False)
+summary_r2 = pd.read_csv('summary_r2.csv')
+
+# sort the summary_r2 by mean_value
+summary_r2.sort_values(by='mean_value', ascending=False)
+np.unique(concatenated_chemcial['Model'], return_counts=True)
